@@ -361,7 +361,7 @@ Implement a function that returns only the first half of a given list.
 "b"
 -}
 firstHalf :: [a] -> [a]
-firstHalf l = fst (splitAt (middle l) l)
+firstHalf l = take (middle l) l
   where
     middle :: [a] -> Int
     middle l = div (length l) 2
@@ -748,7 +748,7 @@ value of the element itself
 🕯 HINT: Use combination of 'map' and 'replicate'
 -}
 smartReplicate :: [Int] -> [Int]
-smartReplicate l = concat (map (\x -> replicate x x) l)
+smartReplicate l = concatMap (\x -> replicate x x) l
 
 {- |
 =⚔️= Task 9
@@ -762,7 +762,7 @@ the list with only those lists that contain a passed element.
 🕯 HINT: Use the 'elem' function to check whether an element belongs to a list
 -}
 contains :: Int -> [[Int]] -> [[Int]]
-contains x l = filter (elem x) l
+contains x = filter (elem x)
 
 
 {- |
@@ -808,6 +808,7 @@ listElementsLessThan :: Int -> [Int] -> [Int]
 listElementsLessThan x = filter (< x)
 
 -- Can you eta-reduce this one???
+pairMul :: [Int] -> [Int] -> [Int]
 pairMul = zipWith (*)
 
 {- |
@@ -866,7 +867,9 @@ list.
 rotate :: Int -> [Int] -> [Int]
 rotate n l
   | n < 0 = []
-  | otherwise = take (length l) (drop (mod n (length l)) (cycle l))
+  | otherwise = take c (drop (mod n c) (cycle l))
+    where
+      c = length l
 
 {- |
 =💣= Task 12*
